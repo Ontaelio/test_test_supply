@@ -2,7 +2,7 @@ import logging
 
 from django.contrib import admin
 
-from units.models import Factory, Retailer, Wholesaler, BusinessUnit
+from units.models import FactoryUnit, Retailer, Wholesaler, BusinessUnit
 
 
 @admin.action(description='Сбросить задолженность')
@@ -18,7 +18,7 @@ class CustomProvider(admin.ModelAdmin):
     actions = [clear_due, ]
 
 
-@admin.register(Factory)
+@admin.register(FactoryUnit)
 class CustomFactory(admin.ModelAdmin):
     list_filter = (('contacts', admin.RelatedOnlyFieldListFilter),)
 

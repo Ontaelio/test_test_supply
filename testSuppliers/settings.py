@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'core',
     'units',
     'products',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -104,7 +105,15 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
             'rest_framework.authentication.BasicAuthentication',
             'rest_framework.authentication.SessionAuthentication',
-            # 'rest_framework.authentication.TokenAuthentication',
-            # 'rest_framework_simplejwt.authentication.JWTAuthentication',
-        ]
+        ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Procurers API',
+    'DESCRIPTION': 'SkyPro Test Test Task',
+    'VERSION': '1.0.0',
 }

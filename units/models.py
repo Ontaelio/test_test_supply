@@ -48,7 +48,7 @@ class Supplier(BusinessUnit):
 #     amount_due = models.BigIntegerField()
 
 
-class Factory(Supplier):
+class FactoryUnit(Supplier):
     class Meta:
         verbose_name = 'Завод'
         verbose_name_plural = 'Заводы'
@@ -59,7 +59,7 @@ class Wholesaler(Supplier):
         verbose_name = 'Оптовик'
         verbose_name_plural = 'Оптовики'
 
-    supplier = models.ForeignKey(Factory, on_delete=models.PROTECT,
+    supplier = models.ForeignKey(FactoryUnit, on_delete=models.PROTECT,
                                  related_name='wholesalers', verbose_name='Поставщик')
     products = models.ManyToManyField(Product, related_name='wholesalers')
     amount_due = models.BigIntegerField()
