@@ -1,21 +1,20 @@
-"""testSuppliers URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
+
+from units import views as unit_views
+from products import views as product_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('products/create', product_views.CreateProductView.as_view(), name='create-product'),
+    path('products/<pk>', product_views.ProductView.as_view(), name='product-view'),
+    re_path(r'products/$', product_views.ProductsListView.as_view(), name='products-list'),
+
+    re_path(r'suppliers/$', unit_views.SupplierListView.as_view(), name='suppliers-list'),
+
+    path('retailers/create', unit_views.RetailerCreateView.as_view(), name='retailer-create'),
+    path('retailers/<pk>/details', unit_views.RetailerDetailedView.as_view(), name='retailer-details'),
+    path('retailers/<pk>', unit_views.RetailerView.as_view(), name='retailer-view'),
+    re_path(r"retailers/$", unit_views.RetailersListView.as_view(), name='retailers-list'),
 ]

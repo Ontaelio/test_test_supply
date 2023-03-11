@@ -5,6 +5,9 @@ from core.models import User
 from django.contrib.auth.models import Group
 
 
+admin.site.unregister(Group)
+
+
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     list_display = ('username', 'email', 'first_name', 'last_name')
@@ -20,4 +23,3 @@ class CustomUserAdmin(UserAdmin):
     )
 
 
-admin.site.unregister(Group)

@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+
+  db:
+    container_name: diploma-database
+    image: postgres:15.1-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - diploma_pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: pg_isready -U ${DB_USER} -d ${DB_NAME}
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+  collect_static:
+    build: .
+    env_file:
+      - .env
+    environment:
+      DB_HOST: db
+    depends_on:
+      db:
+        condition: service_healthy
+    command: python manage.py collectstatic -c --no-input
+    volumes:
+      - django_static:/opt/static
+
+volumes:
+  diploma_pg_data:
+    driver: local
+  django_static:
+    driver: local
